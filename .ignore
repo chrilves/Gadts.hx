@@ -1,6 +1,9 @@
+build/
 .git/
+.gitignore
 *.py
 *.lua
 *.java/
 *.cs/
 *.cpp/
+Prime*.*
