@@ -1,0 +1,11 @@
+-cp src
+-dce full
+-main Gadts
+
+--each
+
+-python build/Gadts.py
+
+--next
+
+-lua build/Gadts.lua

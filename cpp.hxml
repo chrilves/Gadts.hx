@@ -1,0 +1,4 @@
+-cp src
+-dce full
+-main Gadts
+-cpp build/Gadts.cpp
