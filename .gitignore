@@ -1,0 +1,6 @@
+.pijul/
+*.java/
+*.cpp
+*.py
+*.js
+*.lua

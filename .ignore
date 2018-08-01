@@ -1,0 +1,6 @@
+.git/
+*.py
+*.lua
+*.java/
+*.cs/
+*.cpp/
