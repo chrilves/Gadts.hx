@@ -10,7 +10,7 @@ enum LT<N1, N2> {
 }
 
 enum Add<N1, N2, N3> {
-  Z<N>() : Add<N, _0, N>;
+  Z<N> : Add<N, _0, N>;
   L<N1,N2,N3>(hr: Add<N1, N2, N3>) : Add<N1, S<N2>, S<N3>>;
 }
 

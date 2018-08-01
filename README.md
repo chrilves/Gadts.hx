@@ -1,5 +1,9 @@
 # [Generalized Algebraic Data Types](https://en.wikipedia.org/wiki/Generalized_algebraic_data_type) example in [Haxe](https://haxe.org/)
 
+- [On Pijul Nest](https://nest.pijul.com/chrilves/Gadts.hx)
+- [On GitLab](https://gitlab.com/chrilves/Gadts.hx)
+- [On GitGub](https://github.com/chrilves/Gadts.hx)
+
 [Algebraic Data Types](https://en.wikipedia.org/wiki/Algebraic_data_type) (called **ADTs**) are a marvelous tool to model data stuctures. They are intensively used in typed functional programming like in [Haskell](https://haskell-lang.org/), [OCaml](https://ocaml.org), [Scala](https://www.scala-lang.org/), [F#](https://fsharp.org/) but also in modern imperative programming languages like [Rust](https://www.rust-lang.org), [Haxe](https://haxe.org/) or [TypeScript](https://www.typescriptlang.org/docs/handbook/advanced-types.html).
 
 
