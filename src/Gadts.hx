@@ -230,11 +230,11 @@ typedef _0 = String;
     return forAll(2, n);
   }
 
-  public static function renderMain(n: Int): Pretty {
-    return
+  public static function renderMain(n: Int): Void {
+    var content : Pretty =
       tNats(n) +
       types() +
-      Pretty.log('\n\nclass ProofOfPrime {\n  ') +
+      Pretty.log('\n\nclass Prime$n {\n  ') +
       PrettyTools.block(
         Pretty.log('public static var prime$n : Prime<_$n> =\n  ') +
         PrettyTools.block(
@@ -243,9 +243,12 @@ typedef _0 = String;
             case None: Pretty.log("null");
           }) + Pretty.log(";")
         ) +
-        Pretty.log('\n\npublic static function main(): Void {\n  trace(\'$$prime$n\');\n}')
+        Pretty.log('\n\npublic static function main(): Void {\n  Sys.print(\'$$prime$n\');\n}')
       ) +
-      Pretty.log("\n}");
+      Pretty.log("\n}")
+    ;
+
+    sys.io.File.saveContent('Prime$n.hx',content.run());
   }
 
   public static function arg(): Option<Int> {
@@ -273,7 +276,7 @@ typedef _0 = String;
   public static function main(): Void {
     switch (arg()) {
       case Some(p):
-        trace(renderMain(p).run());
+        renderMain(p);
       case None:
         trace("Usage: Gadts <a positive integer>");
     };
