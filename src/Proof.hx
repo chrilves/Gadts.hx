@@ -20,7 +20,7 @@ class ProofExtender {
           (Pretty.offset() +
            Pretty.log('($l( /* : $t */\n    ') +
            (Pretty.offset() +
-            c.map(function(p) { return print(p); })
+            c.map(print)
              .reduce(Pretty.log(",\n"))
            ).local() +
            Pretty.log('\n  ) : $t)')
