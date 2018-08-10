@@ -10,21 +10,20 @@ enum Proof {
 }
 
 class ProofExtender {
-  public static function print(p: Proof): Pretty {
+  public static function print(p: Proof): Pretty
     return switch (p) {
       case Leaf(t, s): Pretty.log('($s : $t)');
       case Node(t, l,c):
         if (c.isEmpty())
           print(Leaf(t, l))
         else
-          (Pretty.offset() +
+          (Pretty.offset +
            Pretty.log('($l( /* : $t */\n    ') +
-           (Pretty.offset() +
+           (Pretty.offset +
             c.map(print)
              .reduce(Pretty.log(",\n"))
            ).local() +
            Pretty.log('\n  ) : $t)')
           ).local();
     };
-  }
 }

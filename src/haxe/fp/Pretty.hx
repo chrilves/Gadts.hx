@@ -13,23 +13,20 @@ private enum Position {
 }
 
 class PositionExtender {
-  public static function current(p: Position): Int {
+  inline final public static function current(p: Position): Int
     return switch (p) {
       case Position(c, o): c;
-    };
-  }
+    }
 
-  public static function offset(p: Position): Int {
+  inline final public static function offset(p: Position): Int
     return switch (p) {
       case Position(c, o): o;
-    };
-  }
+    }
 
-  public static function save(p: Position): Position {
+  inline final public static function save(p: Position): Position
     return switch (p) {
       case Position(c, o): Position(c, c);
-    };
-  }
+    }
 }
 
 private enum State {
@@ -37,41 +34,35 @@ private enum State {
 }
 
 abstract Pretty(Position -> State) {
-  inline public function new(f: Position -> State) {
+  inline final public function new(f: Position -> State) {
     this = f;
   }
 
-  public function apply(pos: Position): State {
+  inline final public function apply(pos: Position): State
     return this(pos);
-  }
 
-  public function run(): String {
+  inline final public function run(): String
     return switch (this(Position(0, 0))) {
       case State(_,o): o;
-    };
-  }
+    }
 
   @:op(A + B)
-  public function plus(other: Pretty): Pretty {
-    return new Pretty(function(pos: Position) {
-      return switch (this(pos)) {
-               case State(p0, o0): 
-                 switch (other.apply(p0)) {
-                   case State(p1, o1):
-                     State(p1, o0 + o1);
-                 };
-      };
-    });
-  }
+  final public function plus(other: Pretty): Pretty
+    return new Pretty((pos: Position) ->
+      switch (this(pos)) {
+        case State(p0, o0): 
+          switch (other.apply(p0)) {
+            case State(p1, o1):
+              State(p1, o0 + o1);
+          }
+      }
+    );
 
-  public static function empty(): Pretty {
-    return new Pretty(function(pos: Position) {
-      return State(pos, "");
-    });
-  }
+  public static final empty: Pretty =
+    new Pretty((pos: Position) -> State(pos, ""));
 
-  public static function newLine(): Pretty {
-    return new Pretty(function(pos: Position) {
+  public static final newLine: Pretty =
+    new Pretty(function(pos: Position) {
 
       var s = "\n";
 
@@ -80,31 +71,25 @@ abstract Pretty(Position -> State) {
 
       return State(Position(pos.offset(), pos.offset()), s);
     });
-  }
 
-  public static function offset(): Pretty {
-    return new Pretty(function(pos: Position) {
-      return State(pos.save(), "");
-    });
-  }
+  public static final offset: Pretty =
+    new Pretty((pos: Position) -> State(pos.save(), ""));
 
-  public function local(): Pretty {
-    return new Pretty(function(pos: Position) {
-      return switch (this(pos)) {
+  public final function local(): Pretty
+    return new Pretty((pos: Position) ->
+      switch (this(pos)) {
         case State(Position(c,o), s): State(Position(c, pos.offset()), s);
-      };
-    });
-  }
+      }
+    );
 
-  public function block(): Pretty {
-    return new Pretty(function(pos: Position) {
-      return switch (this(pos.save())) {
+  public final function block(): Pretty
+    return new Pretty((pos: Position) ->
+      switch (this(pos.save())) {
         case State(Position(c,o), s): State(Position(c, pos.offset()), s);
-      };
-    });
-  }
+      }
+    );
 
-  public static function log(s: String): Pretty {
+  public final static function log(s: String): Pretty
     return new Pretty(function(pos: Position) {
 
       // Building the margin    
@@ -137,7 +122,6 @@ abstract Pretty(Position -> State) {
       return State(Position(newPosition, pos.offset()), output); 
     });
   }
-}
 
 class PrettyExtender {
   public static function reduce(l: List<Pretty>, sep: Pretty): Pretty {
@@ -145,20 +129,17 @@ class PrettyExtender {
       return p1 + sep + p2;
     }
 
-    return l.reduceLeft(add).getOrElse(Pretty.empty());
+    return l.reduceLeft(add).getOrElse(Pretty.empty);
   }
   
-  public static function concat(l: List<Pretty>): Pretty {
-    return l.foldLeft(Pretty.empty(), function(p1, p2) { return p1 + p2; }) ;
-  }
+  inline public static function concat(l: List<Pretty>): Pretty
+    return l.foldLeft(Pretty.empty, (p1, p2) -> p1 + p2) ;
 }
 
 class PrettyTools {
-  public static function local(p: Pretty): Pretty {
+  inline public static function local(p: Pretty): Pretty
     return p.local();
-  }
 
-  public static function block(p: Pretty): Pretty {
+  inline public static function block(p: Pretty): Pretty
     return p.block();
-  }
 }
